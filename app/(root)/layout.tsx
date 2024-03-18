@@ -4,6 +4,7 @@ import "../globals.css";
 import TopBar from "@/components/shared/TobBar";
 import { ClerkProvider } from "@clerk/nextjs";
 import BottomBar from "@/components/shared/BottomBar";
+import LeftBar from "@/components/shared/LeftBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,15 +23,20 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${inter.className} bg-dark-1`}>
           <TopBar />
-          <section className="main-container">
-            <div className="w-full max-w4xl">
-              {children}
-            </div>
-          </section>
+          <main className="flex flex-row">
+            <LeftBar />
+            <section className="main-container">
+
+              <div className="w-full max-w4xl">
+                {children}
+              </div>
+            </section>
+          </main>
+
           <BottomBar />
         </body>
 
       </html>
-    </ClerkProvider>
+    </ClerkProvider >
   );
 }

@@ -17,12 +17,12 @@ export const sidebardata = [
     {
       imgURL: "/assets/create.svg",
       route: "/create-post",
-      label: "Create Post",
+      label: "unburden",
     },
     {
       imgURL: "/assets/group.svg",
       route: "/groups",
-      label: "groups",
+      label: "Support",
     },
     {
       imgURL: "/assets/profile.svg",

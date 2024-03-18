@@ -1,6 +1,5 @@
 import { Inter } from "next/font/google";
 import "../globals.css";
-import { describe } from "node:test";
 import React from "react";
 
 export const metadata = {
@@ -8,11 +7,16 @@ export const metadata = {
     description: "A mental health support platform"
 }
 
+const inter = Inter({ subsets: ["latin"] })
 
 export default function RootLayout({ children, }: {
     children: React.ReactNode
 }) {
     return (
-        <></>
+        <html lang="en">
+            <body className={`{$inter.className} bg-dark-1`}>
+
+            </body>
+        </html>
     );
 }

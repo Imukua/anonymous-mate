@@ -44,6 +44,10 @@ const supportGroupSchema = new mongoose.Schema({
     ]
 });
 
-const SupportGroup = mongoose.models.SupportGroup || mongoose.model("SupportGroup", supportGroupSchema);
-
+let SupportGroup;
+if (mongoose.connection && mongoose.connection.models.SupportGroup) {
+    SupportGroup = mongoose.connection.models.SupportGroup;
+} else {
+    SupportGroup = mongoose.model("SupportGroup", supportGroupSchema);
+}
 export default SupportGroup;

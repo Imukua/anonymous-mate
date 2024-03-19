@@ -3,9 +3,6 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 
 
-
-
-
 export const metadata = {
     title: "Anonymate",
     description: "A mental health group platform"

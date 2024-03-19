@@ -58,3 +58,19 @@ export async function updateUser({
         throw new Error(`failed to create/update user : ${error.message}`);
     }
 }
+
+
+
+export async function fetchMembership(authUserId: string, groupId: string) {
+    try {
+        connectTodb();
+        const user = await User.findOne({ authUserId });
+        const group = await SupportGroup.findOne({ groupId }, { _id: 1 });
+
+        const isMember = user.supportGroups.includes(group._id);
+        return isMember;
+
+    } catch (error) {
+        console.log("Error fetching membership:", error);
+    }
+}

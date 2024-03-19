@@ -26,8 +26,12 @@ async function ProfileHeader({
     groupId,
 
 }: profileProps) {
-    const isMember = await fetchMembership(authUserId, groupId ?? '');
-    console.log(isMember);
+    if (groupId) {
+        const isMember = await fetchMembership(authUserId, groupId ?? '');
+        console.log(isMember);
+
+    }
+
 
 
 

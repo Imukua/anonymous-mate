@@ -1,4 +1,3 @@
-import { MongoTopologyClosedError } from "mongodb";
 import mongoose from "mongoose";
 
 const supportGroupSchema = new mongoose.Schema({
@@ -45,8 +44,6 @@ const supportGroupSchema = new mongoose.Schema({
     ]
 });
 
-const SupportGroup =
-    mongoose.models.SupportGroup ||
-    mongoose.model("SupportGroup", supportGroupSchema);
+const SupportGroup = mongoose.models.SupportGroup || mongoose.model("SupportGroup", supportGroupSchema);
 
 export default SupportGroup;

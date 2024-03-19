@@ -1,8 +1,12 @@
-import { revalidatePath } from "next/cache";
-import SupportGroup from "../models/support.group.model";
-import User from "../models/user.model";
-import { connectTodb } from "../mongoDB";
+"use server";
 
+import SupportGroup from "../models/support.group.model";
+import { connectTodb } from "../mongoDB";
+import { revalidatePath } from "next/cache";
+import Post from "../models/post.model";
+import { FilterQuery, SortOrder } from "mongoose";
+import { connect } from "http2";
+import User from "../models/user.model";
 export async function fetchUser(userId: string) {
     try {
         connectTodb();
@@ -106,3 +110,4 @@ export async function fetchUserPosts(userId: string) {
         throw error;
     }
 }
+

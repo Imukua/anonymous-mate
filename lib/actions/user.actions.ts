@@ -173,7 +173,7 @@ export async function getActivity(userId: string) {
         // Find and return the child Posts (replies) excluding the ones created by the same user
         const replies = await Post.find({
             _id: { $in: childPostIds },
-            // Exclude Posts authored by the same user
+            author: { $ne: userId }, // Exclude Posts authored by the same user
         }).populate({
             path: "author",
             model: User,

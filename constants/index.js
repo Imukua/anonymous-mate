@@ -32,9 +32,9 @@ export const sidebardata = [
   ];
   
   export const profileTabs = [
-    { value: "posts", label: "Posts", icon: "/assets/reply.svg" },
-    { value: "replies", label: "Replies", icon: "/assets/members.svg" },
-    { value: "tagged", label: "Tagged", icon: "/assets/tag.svg" },
+    { value: "posts", label: "Posts", icon: "/assets/posts.svg" },
+    { value: "replies", label: "Replies", icon: "/assets/replies.svg" },
+    { value: "tagged", label: "Friends", icon: "/assets/members.svg" },
   ];
   
   export const groupTabs = [

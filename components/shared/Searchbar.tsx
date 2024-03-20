@@ -34,7 +34,7 @@ function Searchbar({ routeType }: Props) {
         <>
             <div className='searchbar'>
                 <Image
-                    src='/assets/search-gray.svg'
+                    src='/assets/searchbar.svg'
                     alt='search'
                     width={24}
                     height={24}
@@ -44,7 +44,7 @@ function Searchbar({ routeType }: Props) {
                     id='text'
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    placeholder={`${routeType !== "/search" ? "Search support groups" : "Search mates"
+                    placeholder={`${routeType !== "search" ? "Search support groups" : "Search for mates"
                         }`}
                     className='no-focus searchbar_input'
                 />

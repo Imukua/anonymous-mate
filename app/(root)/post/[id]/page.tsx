@@ -32,7 +32,7 @@ async function page({ params }: { params: { id: string } }) {
             <div className='mt-7'>
                 <CommentForm
                     postId={params.id}
-                    currentUserimg={user.imageUrl}
+                    currentUserimg={userInfo.picture}
                     currentUserid={JSON.stringify(userInfo._id)}
                 />
             </div>

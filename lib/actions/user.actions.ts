@@ -159,3 +159,32 @@ export async function fetchUsers({
 
 }
 
+
+export async function getActivity(userId: string) {
+    try {
+        connectTodb();
+        const userPosts = await Post.find({ author: userId });
+
+        // Collect all the child Post ids (replies) from the 'children' field of each user Post
+        const childPostIds = userPosts.reduce((acc, userPost) => {
+            return acc.concat(userPost.children);
+        }, []);
+
+        // Find and return the child Posts (replies) excluding the ones created by the same user
+        const replies = await Post.find({
+            _id: { $in: childPostIds },
+            // Exclude Posts authored by the same user
+        }).populate({
+            path: "author",
+            model: User,
+            select: "name picture _id",
+        });
+
+        return replies;
+
+    } catch (error) {
+        console.log("Error fetching user activity:", error);
+    }
+
+}
+

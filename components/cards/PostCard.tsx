@@ -69,8 +69,8 @@ function PostCard({
                         <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
                             <div className='flex gap-3.5'>
                                 <Image
-                                    src='/assets/heart-gray.svg'
-                                    alt='heart'
+                                    src='/assets/like.svg'
+                                    alt='like'
                                     width={24}
                                     height={24}
                                     className='cursor-pointer object-contain'
@@ -78,7 +78,7 @@ function PostCard({
                                 <Link href={`/post/${id}`}>
                                     <Image
                                         src='/assets/reply.svg'
-                                        alt='heart'
+                                        alt='reply'
                                         width={24}
                                         height={24}
                                         className='cursor-pointer object-contain'
@@ -86,23 +86,26 @@ function PostCard({
                                 </Link>
                                 <Image
                                     src='/assets/repost.svg'
-                                    alt='heart'
+                                    alt='repost'
                                     width={24}
                                     height={24}
                                     className='cursor-pointer object-contain'
                                 />
                                 <Image
                                     src='/assets/share.svg'
-                                    alt='heart'
+                                    alt='share'
                                     width={24}
                                     height={24}
                                     className='cursor-pointer object-contain'
                                 />
+
+
                             </div>
-                            {isComment && comments?.length > 0 && (
+
+                            {comments?.length > 0 && (
                                 <Link href={`/post/${id}`}>
                                     <p className="mt-1 text-subtle-medium text-gray-1">
-                                        {comments.length} repl{comments.length > 1 ? "ies" : "y"}
+                                        {comments.length} advice{comments.length > 1 ? "es" : ""}
                                     </p>
                                 </Link>
                             )}

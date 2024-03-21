@@ -52,7 +52,7 @@ async function PostsTab({ currentUserId, accountId, accountType }: Props) {
     }
 
     return (
-        <section className='mt-9 flex flex-col gap-10'>
+        <section className='mt-7 flex flex-col gap-10'>
             {result.posts.map((post) => (
                 <PostCard
                     key={post._id}

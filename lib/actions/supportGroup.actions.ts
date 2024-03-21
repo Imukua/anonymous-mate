@@ -1,7 +1,6 @@
 "use server";
 
 import { FilterQuery, SortOrder } from "mongoose";
-
 import SupportGroup from "../models/support.group.model";
 import Post from "../models/post.model";
 import User from "../models/user.model";
@@ -83,3 +82,51 @@ export async function fetchGroupPosts(id: string) {
         throw error;
     }
 }
+
+export async function fetchGroups({
+    searchString,
+    pageNumber,
+    pageSize,
+    sortBy = 'desc',
+}: {
+    searchString: string;
+    pageNumber: number;
+    pageSize: number;
+    sortBy: SortOrder;
+}) {
+    try {
+        connectTodb();
+        const skip = (pageNumber - 1) * pageSize;
+        const regex = new RegExp(searchString, "i");
+
+        const query: FilterQuery<typeof SupportGroup> = {}
+
+        if (searchString.trim() !== "") {
+            query.$or = [
+                { username: { $regex: regex } },
+                { name: { $regex: regex } },
+            ];
+        }
+        const totalGroups = await SupportGroup.countDocuments(query);
+
+        const sortOpt = { createdBy: sortBy };
+
+        const groupQuery = SupportGroup.find(query)
+            .sort(sortOpt)
+            .skip(skip)
+            .limit(pageSize)
+            .populate('members')
+
+        const groups = await groupQuery.exec();
+        const isNext = totalGroups > skip + groups.length;
+
+        return { groups, isNext }
+
+
+
+    } catch (error) {
+        console.error("Error fetching groups:", error);
+        throw error;
+    }
+}
+

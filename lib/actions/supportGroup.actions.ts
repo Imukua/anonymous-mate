@@ -174,3 +174,24 @@ export async function createGroup({ userId, name, username, bio, picture, path }
     }
 
 }
+
+
+export async function fetchGroupInfo(groupId: string) {
+    try {
+        connectTodb;
+        const groupInfo = await SupportGroup.findOne({ groupId })
+            .populate([
+                'founder',
+                {
+                    path: "members",
+                    model: User,
+                    select: "name username picture _id id",
+                }]);
+        return groupInfo;
+
+
+    } catch (error) {
+        console.log('Error fetching group details: ', error)
+        throw error;
+    }
+}

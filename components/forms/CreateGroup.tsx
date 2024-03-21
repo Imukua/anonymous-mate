@@ -144,7 +144,7 @@ const CreateGroup = ({ group, btnTitle }: Props) => {
                                     onChange={(e) => handleImage(e, field.onChange)}
                                 />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage className='text-rose-300' />
                         </FormItem>
                     )}
                 />
@@ -163,7 +163,7 @@ const CreateGroup = ({ group, btnTitle }: Props) => {
                                     {...field}
                                 />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage className='text-rose-300' />
                         </FormItem>
                     )}
                 />
@@ -182,7 +182,7 @@ const CreateGroup = ({ group, btnTitle }: Props) => {
                                     {...field}
                                 />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage className='text-rose-300' />
 
                         </FormItem>
                     )}
@@ -202,7 +202,7 @@ const CreateGroup = ({ group, btnTitle }: Props) => {
                                     {...field}
                                 />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage className='text-rose-300' />
                         </FormItem>
                     )}
                 />

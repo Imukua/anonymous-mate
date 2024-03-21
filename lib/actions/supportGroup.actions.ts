@@ -130,3 +130,47 @@ export async function fetchGroups({
     }
 }
 
+export async function createGroup({ userId, name, username, bio, picture, path }: createParams) {
+
+    /*generate random groupid*/
+    const user = await User.findOne({ id: userId })
+    let newId;
+    let existingDoc;
+    do {
+        newId = new mongoose.Types.ObjectId();
+        try {
+            existingDoc = await SupportGroup.findById(newId);
+        } catch (error) {
+            console.error("Error finding existing group:", error);
+            throw error;
+        }
+    } while (existingDoc);
+
+    try {
+        connectTodb();
+        await SupportGroup.findOneAndUpdate(
+            { id: newId },
+            {
+                username: username.toLowerCase(),
+                name,
+                bio,
+                picture,
+                founder: user._id,
+                members: [user._id]
+            },
+            { upsert: true }
+        );
+
+        user.supportGroups.push(newId);
+        await user.save();
+
+        if (path === "/profile/edit") {
+            revalidatePath(path);
+        }
+
+    } catch (error) {
+        console.error("Error creating group:", error);
+        throw error;
+    }
+
+}

@@ -1,10 +1,10 @@
-import ProfileHeader from "@/components/shared/ProfileHeader";
 import { currentUser } from "@clerk/nextjs";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { groupTabs } from "@/constants";
 import Image from "next/image";
 import PostsTab from "@/components/shared/PostsTab";
 import { fetchGroupInfo } from "@/lib/actions/supportGroup.actions";
+import GroupProfile from "@/components/shared/GroupProfile";
 
 async function Page({ params }: { params: { id: string } }) {
 
@@ -16,7 +16,7 @@ async function Page({ params }: { params: { id: string } }) {
 
     return (
         <section>
-            <ProfileHeader
+            <GroupProfile
                 accountId={groupInfo.id}
                 authUserId={user.id}
                 name={groupInfo.name}
@@ -24,7 +24,8 @@ async function Page({ params }: { params: { id: string } }) {
                 imgUrl={groupInfo.picture}
                 bio={groupInfo.bio}
                 type="supportGroup"
-            /><div className='mt-9'>
+            />
+            <div className='mt-3'>
                 <Tabs defaultValue='posts' className='w-full'>
                     <TabsList className='tab'>
                         {groupTabs.map((tab) => (

@@ -8,10 +8,13 @@ import { connectTodb } from "../mongoDB";
 import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
 
+interface joinParams {
+    authUserId: string;
+    groupId: string;
 
+}
 export async function joinGroup(
-    authUserId: string,
-    groupId: string
+    { authUserId, groupId }: joinParams
 ) {
     try {
         connectTodb();

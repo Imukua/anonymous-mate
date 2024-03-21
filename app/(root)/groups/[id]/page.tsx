@@ -17,13 +17,12 @@ async function Page({ params }: { params: { id: string } }) {
     return (
         <section>
             <GroupProfile
-                accountId={groupInfo.id}
                 authUserId={user.id}
+                groupId={params.id}
                 name={groupInfo.name}
                 username={groupInfo.username}
                 imgUrl={groupInfo.picture}
                 bio={groupInfo.bio}
-                type="supportGroup"
             />
             <div className='mt-3'>
                 <Tabs defaultValue='posts' className='w-full'>

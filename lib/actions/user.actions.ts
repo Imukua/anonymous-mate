@@ -4,7 +4,7 @@ import SupportGroup from "../models/support.group.model";
 import { connectTodb } from "../mongoDB";
 import { revalidatePath } from "next/cache";
 import Post from "../models/post.model";
-import { FilterQuery, SortOrder } from "mongoose";
+import mongoose, { FilterQuery, SortOrder } from "mongoose";
 import User from "../models/user.model";
 export async function fetchUser(userId: string) {
     try {
@@ -64,17 +64,20 @@ export async function updateUser({
 
 
 
-export async function fetchMembership(authUserId: string, groupId: string) {
+export async function fetchMembership({ authUserId, groupId }: { authUserId: string, groupId: string }) {
     try {
         connectTodb();
-        const user = await User.findOne({ authUserId });
-        const group = await SupportGroup.findOne({ groupId }, { _id: 1 });
+        const group_Id = new mongoose.Types.ObjectId(groupId);
+        const user = await User.findOne({ id: authUserId });
+        const usergroups = user.supportGroups;
+        console.log("usergroups", usergroups);
+        console.log("group_id", group_Id);
 
-        const isMember = user.supportGroups.includes(group._id);
+        const isMember = usergroups.includes(group_Id);
         return isMember;
 
     } catch (error) {
-        console.log("Error fetching membership:", error);
+        console.log("Error fetchng membership:", error);
     }
 }
 

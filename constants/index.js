@@ -38,7 +38,7 @@ export const sidebardata = [
   ];
   
   export const groupTabs = [
-    { value: "posts", label: "Posts", icon: "/assets/reply.svg" },
+    { value: "posts", label: "Posts", icon: "/assets/posts.svg" },
     { value: "members", label: "Members", icon: "/assets/members.svg" },
     { value: "requests", label: "Requests", icon: "/assets/request.svg" },
   ];

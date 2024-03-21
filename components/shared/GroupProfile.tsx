@@ -2,11 +2,8 @@
 import { fetchMembership } from "@/lib/actions/user.actions";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "../ui/button";
-import { joinGroup } from "@/lib/actions/supportGroup.actions";
 
 interface profileProps {
-    accountId: string;
     authUserId: string;
     name: string;
     username: string;
@@ -14,26 +11,32 @@ interface profileProps {
     bio: string;
     type?: string;
     groupId?: string;
+    showBtn?: boolean;
 }
 async function GroupProfile({
-    accountId,
     authUserId,
     name,
     username,
     imgUrl,
     bio,
-    type,
     groupId,
+    showBtn = true,
 
 }: profileProps) {
     if (groupId) {
-        const isMember = await fetchMembership(authUserId, groupId ?? '');
-        console.log(isMember);
+        console.log(groupId)
+        console.log(authUserId)
+        const isMember = await fetchMembership({
+            authUserId: authUserId,
+            groupId: groupId
+        });
+
+        if (isMember) {
+            showBtn = false;
+        }
+
 
     }
-
-
-
 
     return (
         <div className='flex flex-col w-full   h-full  ' >
@@ -51,12 +54,14 @@ async function GroupProfile({
                     <span className=" text-rose-300">@{username}</span>
                     <span className="block text-gray-500 text-sm">{bio}</span>
                 </div>
-                <div>
-
-
-                </div>
+                {showBtn ? (<Link
+                    href={`/groups/join?gid=${groupId}`}
+                    className="py-2"
+                >
+                    <button className="bg-black text-white rounded-full  px-6 py-3">Join</button>
+                </Link>) : null}
             </div>
-        </div>
+        </div >
     );
 
 }

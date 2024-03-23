@@ -53,6 +53,51 @@ export async function joinGroup(
         throw error;
     }
 }
+export async function leaveGroup(
+    { authUserId, groupId }: joinParams
+) {
+    try {
+        connectTodb();
+
+        // Find the group by its unique id
+        const group = await SupportGroup.findOne({ id: groupId });
+
+        if (!group) {
+            throw new Error("group not found");
+        }
+
+        // Find the user by their unique id
+        const user = await User.findOne({ id: authUserId });
+
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        // Check if the user is not a member of the group
+        if (!group.members.includes(user._id)) {
+            throw new Error("User is not a member of the group");
+        }
+
+        // Add the user's _id to the members array in the group
+        group.members.pull(user._id);
+        await group.save();
+
+        // Add the group's _id to the communities array in the user
+        user.supportGroups.pull(group._id);
+        await user.save();
+
+        if (group.members.length === 0) {
+            await SupportGroup.deleteOne(group._id);
+            return true
+        }
+
+        return group;
+    } catch (error) {
+        // Handle any errors
+        console.error("Error removing member from group:", error);
+        throw error;
+    }
+}
 export async function fetchGroupPosts(id: string) {
     try {
         connectTodb();

@@ -18,7 +18,7 @@ import { postValidation } from "@/lib/validations/post";
 import { createPost } from "@/lib/actions/post.actions";
 
 
-function CreatePost({ userId }: { userId: string }) {
+function CreatePost({ userId, groupId }: { userId: string, groupId: string | null }) {
     const router = useRouter();
     const pathname = usePathname();
 
@@ -34,11 +34,14 @@ function CreatePost({ userId }: { userId: string }) {
         await createPost({
             content: values.post,
             author: userId,
-            groupId: null,
+            groupId: groupId,
             path: pathname,
         });
-
-        router.push("/");
+        if (groupId) {
+            router.push(`/groups/${groupId}`);
+        } else {
+            router.push("/");
+        }
     };
 
     return (

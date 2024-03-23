@@ -4,7 +4,9 @@ import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 
-async function Page() {
+async function Page({
+    groupId
+}: { groupId: string }) {
     const user = await currentUser();
 
     if (!user) return null;

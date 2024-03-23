@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { formatDateString } from "@/lib/utils";
+import DeletePost from "../forms/DeletePost";
 
 interface cardParams {
     id: string;
@@ -112,6 +113,14 @@ function PostCard({
                         </div>
                     </div>
                 </div>
+                <DeletePost
+                    postId={JSON.stringify(id)}
+                    currentUserId={currentUserId}
+                    authorId={author.id}
+                    parentId={parentId}
+                    isComment={isComment}
+                />
+
             </div>
 
 

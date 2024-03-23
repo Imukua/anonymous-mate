@@ -112,7 +112,7 @@ export async function fetchGroupPosts(id: string) {
                     select: "name picture id", // Select the "name" and "_id" fields from the "User" model
                 },
                 {
-                    path: "posts",
+                    path: "children",
                     model: Post,
                     populate: {
                         path: "author",

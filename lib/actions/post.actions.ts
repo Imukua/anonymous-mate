@@ -5,11 +5,12 @@ import supportGroup from "../models/support.group.model";
 import { connectTodb } from "../mongoDB";
 import { revalidatePath } from "next/cache";
 import Post from "../models/post.model";
+import SupportGroup from "../models/support.group.model";
 
 interface postProps {
     author: string;
     content: string;
-    groupId: null;
+    groupId: string | null;
     path: string;
 }
 
@@ -24,7 +25,7 @@ export async function createPost({
         const createdPost = await Post.create({
             author,
             content,
-            group: null,
+            group: groupId,
         });
 
         //proceed to update user model
@@ -33,6 +34,20 @@ export async function createPost({
                 posts: createdPost._id,
             },
         });
+
+        //proceed to update group model
+        if (groupId) {
+            const groupObjId = await supportGroup.findOne(
+                { id: groupId },
+                { _id: 1 }
+            );
+            if (groupObjId) {
+                await SupportGroup.findByIdAndUpdate(groupObjId, {
+                    $push: { posts: createdPost._id },
+                });
+            }
+        }
+        revalidatePath(path);
     } catch (error: any) {
         throw new Error(`Error creating post: ${error}`)
     }

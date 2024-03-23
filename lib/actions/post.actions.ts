@@ -167,7 +167,7 @@ export async function addCommentToPost(
         });
 
         const savedComment = await newComment.save();
-        //Add the comment thread's ID to the original thread's children array
+        //Add the comment Post's ID to the original Post's children array
         parentPost.children.push(savedComment._id);
 
         await parentPost.save();
@@ -175,5 +175,73 @@ export async function addCommentToPost(
 
     } catch (error: any) {
         console.log(`Failed to add comment to post: ${error}`)
+    }
+}
+
+async function fetchAllComments(postId: string): Promise<any[]> {
+    const comments = await Post.find({ parentId: postId });
+
+    const descendantComments = [];
+    for (const comment of comments) {
+        const descendants = await fetchAllComments(comment._id);
+        descendantComments.push(comment, ...descendants);
+    }
+
+    return descendantComments;
+}
+
+export async function deletePost(id: string, path: string): Promise<void> {
+    try {
+        connectTodb();
+
+        // fetch the Post to be deleted 
+        const mainPost = await Post.findById(id).populate("author supportGroup");
+
+        if (!mainPost) {
+            throw new Error("Post not found");
+        }
+
+        // Fetch all comments and their descendants recursively
+        const descendantPosts = await fetchAllComments(id);
+
+        // Get all descendant Post IDs including the main Post ID and child Post IDs
+        const descendantPostIds = [
+            id,
+            ...descendantPosts.map((Post) => Post._id),
+        ];
+
+        // Extract the authorIds and GroupIds to update User and group models respectively
+        const uniqueAuthorIds = new Set(
+            [
+                ...descendantPosts.map((Post) => Post.author?._id?.toString()),
+                mainPost.author?._id?.toString(),
+            ].filter((id) => id !== undefined)
+        );
+
+        const uniqueGroupIds = new Set(
+            [
+                ...descendantPosts.map((Post) => Post.group?._id?.toString()),
+                mainPost.group?._id?.toString(),
+            ].filter((id) => id !== undefined)
+        );
+
+        // Recursively delete child Posts and their descendants
+        await Post.deleteMany({ _id: { $in: descendantPostIds } });
+
+        // Update User model with deleted posts/comments
+        await User.updateMany(
+            { _id: { $in: Array.from(uniqueAuthorIds) } },
+            { $pull: { Posts: { $in: descendantPostIds } } }
+        );
+
+        // Update supportGroup  model  with deleted posts/comments
+        await SupportGroup.updateMany(
+            { _id: { $in: Array.from(uniqueGroupIds) } },
+            { $pull: { Posts: { $in: descendantPostIds } } }
+        );
+
+        revalidatePath(path);
+    } catch (error: any) {
+        throw new Error(`Failed to delete Post: ${error.message}`);
     }
 }

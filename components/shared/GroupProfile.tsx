@@ -68,6 +68,7 @@ async function GroupProfile({
                     <JoinGroup
                         userId={authUserId}
                         groupId={groupId}
+                        isMember={showBtn}
                     />
                 </div>
             </div>

@@ -27,9 +27,9 @@ function JoinGroup({ userId, groupId }: Params) {
         <div>
             <Button
                 size='sm'
-                className='group-card_btn mt-9'
+                className="bg-black text-white rounded-full  px-6 py-3"
                 onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleClick(userId, groupId)}
-            >Join Group</Button>
+            >Join</Button>
         </div>
     )
 }

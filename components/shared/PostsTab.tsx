@@ -45,6 +45,7 @@ async function PostsTab({ currentUserId, accountId, accountType }: Props) {
         result = await fetchGroupPosts(accountId);
     } else {
         result = await fetchUserPosts(accountId);
+        console.log(result)
     }
 
     if (!result) {
@@ -74,6 +75,7 @@ async function PostsTab({ currentUserId, accountId, accountType }: Props) {
                             ? { name: result.name, id: result.id, picture: result.picture }
                             : post.supportGroup
                     }
+
                     createdAt={post.createdAt}
                     comments={post.children}
                 />

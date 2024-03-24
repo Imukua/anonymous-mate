@@ -70,8 +70,7 @@ export async function fetchMembership({ authUserId, groupId }: { authUserId: str
         const group_Id = new mongoose.Types.ObjectId(groupId);
         const user = await User.findOne({ id: authUserId });
         const usergroups = user.supportGroups;
-        console.log("usergroups", usergroups);
-        console.log("group_id", group_Id);
+
 
         const isMember = usergroups.includes(group_Id);
         return isMember;
@@ -106,7 +105,9 @@ export async function fetchUserPosts(userId: string) {
                 },
             ],
         });
+        console.log(posts)
         return posts;
+
     } catch (error) {
         console.error("Error fetching user posts:", error);
         throw error;

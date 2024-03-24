@@ -24,8 +24,6 @@ function DeletePost({
     const router = useRouter();
 
     if (currentUserId !== authorId || pathname === "/") {
-        console.log("skipedddd");
-        console.log(currentUserId, authorId, pathname);
 
         return null;
     }

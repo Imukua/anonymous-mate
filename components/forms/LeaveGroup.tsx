@@ -1,2 +1,0 @@
-//page to leave group
-

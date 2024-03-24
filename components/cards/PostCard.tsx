@@ -103,13 +103,7 @@ function PostCard({
 
                             </div>
 
-                            {comments?.length > 0 && (
-                                <Link href={`/post/${id}`}>
-                                    <p className="mt-1 text-subtle-medium text-gray-1">
-                                        {comments.length} advice{comments.length > 1 ? "es" : ""}
-                                    </p>
-                                </Link>
-                            )}
+
                         </div>
                     </div>
                 </div>
@@ -122,6 +116,46 @@ function PostCard({
                 />
 
             </div>
+
+            {!isComment && comments.length > 0 && (
+                <div className='ml-1 mt-3 flex items-center gap-2'>
+                    {comments.slice(0, 2).map((comment, index) => (
+                        <Image
+                            key={index}
+                            src={comment.author.picture}
+                            alt={`user_${index}`}
+                            width={24}
+                            height={24}
+                            className={`${index !== 0 && "-ml-5"} rounded-full object-cover`}
+                        />
+                    ))}
+
+                    <Link href={`/post/${id}`}>
+                        <p className="mt-1 text-subtle-medium text-gray-1">
+                            {comments.length} advice{comments.length > 1 ? "es" : ""}
+                        </p>
+                    </Link>
+                </div>
+            )}
+            {!isComment && supportGroup && (
+                <Link
+                    href={`/communities/${supportGroup.id}`}
+                    className='mt-5 flex items-center'
+                >
+                    <p className='text-subtle-medium text-gray-1'>
+                        {formatDateString(createdAt)}
+                        {supportGroup && ` - ${supportGroup.name} supportGroup`}
+                    </p>
+
+                    <Image
+                        src={supportGroup.picture}
+                        alt={supportGroup.name}
+                        width={14}
+                        height={14}
+                        className='ml-1 rounded-full object-cover'
+                    />
+                </Link>
+            )}
 
 
         </article>

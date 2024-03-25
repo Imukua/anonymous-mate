@@ -92,7 +92,7 @@ export async function fetchUserPosts(userId: string) {
                 {
                     path: "supportGroup",
                     model: SupportGroup,
-                    select: "name id picture _id", // Select the "name" and "_id" fields from the "group" model
+                    select: "name picture id", // Select the "name" and "_id" fields from the "group" model
                 },
                 {
                     path: "children",

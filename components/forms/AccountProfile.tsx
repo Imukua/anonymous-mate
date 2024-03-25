@@ -60,7 +60,18 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
         console.log(hasChanged)
 
         if (hasChanged) {
-            const imgRes = await startUpload(files)
+            let imgRes;
+            let retryCount = 0;
+
+            while (retryCount < 2) {
+                try {
+                    imgRes = await startUpload(files);
+                    break;
+                } catch (error) {
+                    console.error(`Attempt ${retryCount + 1} to upload image failed. Error: ${error}`);
+                    retryCount++;
+                }
+            }
 
             if (imgRes && imgRes[0].url) {
                 values.profile_photo = imgRes[0].url;

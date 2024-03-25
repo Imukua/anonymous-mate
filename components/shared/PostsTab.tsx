@@ -29,6 +29,8 @@ interface Result {
                 picture: string;
             };
         }[];
+        likes: any;
+
     }[];
 }
 
@@ -77,6 +79,8 @@ async function PostsTab({ currentUserId, accountId, accountType }: Props) {
 
                     createdAt={post.createdAt}
                     comments={post.children}
+                    likes={post.likes.length}
+
                 />
             ))}
         </section>

@@ -105,7 +105,6 @@ export async function fetchUserPosts(userId: string) {
                 },
             ],
         });
-        console.log(posts)
         return posts;
 
     } catch (error) {

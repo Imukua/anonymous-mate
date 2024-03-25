@@ -2,8 +2,6 @@
 import { fetchMembership } from "@/lib/actions/user.actions";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "../ui/button";
-import { joinGroup } from "@/lib/actions/supportGroup.actions";
 
 interface profileProps {
     accountId: string;
@@ -28,7 +26,6 @@ async function ProfileHeader({
 }: profileProps) {
     if (groupId) {
         const isMember = await fetchMembership(authUserId, groupId ?? '');
-        console.log(isMember);
 
     }
 

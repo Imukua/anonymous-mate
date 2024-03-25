@@ -45,7 +45,6 @@ async function PostsTab({ currentUserId, accountId, accountType }: Props) {
         result = await fetchGroupPosts(accountId);
     } else {
         result = await fetchUserPosts(accountId);
-        console.log(result)
     }
 
     if (!result) {

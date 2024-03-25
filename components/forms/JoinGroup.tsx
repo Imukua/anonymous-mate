@@ -14,7 +14,6 @@ function JoinGroup({ userId, groupId, isMember }: Params) {
     const router = useRouter();
 
     const handleClick = async (uId: string, gId: string) => {
-        console.log(gId);
         if (!isMember) {
             await joinGroup(
                 {

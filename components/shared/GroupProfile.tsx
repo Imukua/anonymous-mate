@@ -27,8 +27,6 @@ async function GroupProfile({
 
 }: profileProps) {
     if (groupId) {
-        console.log(groupId)
-        console.log(authUserId)
         const isMember = await fetchMembership({
             authUserId: authUserId,
             groupId: groupId

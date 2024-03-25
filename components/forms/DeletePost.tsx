@@ -23,7 +23,7 @@ function DeletePost({
     const pathname = usePathname();
     const router = useRouter();
 
-    if (currentUserId !== authorId || pathname === "/") {
+    if (currentUserId !== authorId) {
 
         return null;
     }

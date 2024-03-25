@@ -57,7 +57,6 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
         const blob = values.profile_photo;
 
         const hasChanged = isBase64Image(blob);
-        console.log(hasChanged)
 
         if (hasChanged) {
             let imgRes;

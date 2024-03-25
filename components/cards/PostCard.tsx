@@ -3,7 +3,6 @@ import Link from "next/link";
 import { formatDateString } from "@/lib/utils";
 import DeletePost from "../forms/DeletePost";
 import ReactionsTab from "../shared/ReactionsBar";
-import { likeStatus } from "@/lib/actions/post.actions";
 
 interface cardParams {
     id: string;
@@ -43,7 +42,6 @@ function PostCard({
     likes,
 }: cardParams) {
 
-    const isLiked = async () => await likeStatus(id, currentUserId);
 
     return (
         <article

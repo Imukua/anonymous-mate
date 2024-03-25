@@ -39,7 +39,13 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "SupportGroup"
         },
-    ]
+    ],
+    likes: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Post"
+        },
+    ],
 });
 
 

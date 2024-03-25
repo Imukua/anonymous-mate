@@ -224,7 +224,6 @@ export async function deletePost(id: string, path: string): Promise<void> {
                 mainPost.group?._id?.toString(),
             ].filter((id) => id !== undefined)
         );
-        console.log(uniqueAuthorIds)
 
         // Recursively delete child Posts and their descendants
         await Post.deleteMany({ _id: { $in: descendantPostIds } });
@@ -245,4 +244,42 @@ export async function deletePost(id: string, path: string): Promise<void> {
     } catch (error: any) {
         throw new Error(`Failed to delete Post: ${error.message}`);
     }
+}
+
+export async function updateLike(postId: string, userId: string) {
+    try {
+        connectTodb();
+        const post = await Post.findOne({ id: postId });
+        const user = await User.findOne({ id: userId });
+
+        if (!post) {
+            throw new Error("Post not found");
+        }
+
+        const isLiked = post.likes?.includes(user._id);
+        if (isLiked) {
+            post.likes.pull(user._id);
+            user.likes.pull(post._id);
+        } else {
+            post.likes.push(user._id);
+            user.likes.push(post._id);
+        }
+        await post.save();
+        await user.save();
+        const likesCount = post.likes.length;
+        return likesCount;
+
+    } catch (error: any) {
+        throw new Error(`Failed to update like: ${error.message}`);
+    }
+}
+
+
+export async function likeStatus(postId: string, userId: string) {
+    connectTodb();
+    const post = await Post.findOne({ id: postId });
+    const user = await User.findOne({ id: userId });
+    const likesCount = post.likes.length;
+    const status = post.likes.includes(user._id);
+    return { status, likesCount };
 }

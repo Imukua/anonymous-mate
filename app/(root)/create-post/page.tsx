@@ -8,7 +8,6 @@ async function Page(
     { searchParams, }: { searchParams: { [key: string]: string | undefined } }) {
     const user = await currentUser();
     if (!user) return null;
-    console.log(searchParams?.gid);
 
 
     const userInfo = await fetchUser(user.id);

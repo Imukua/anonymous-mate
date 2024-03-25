@@ -3,6 +3,7 @@ import Link from "next/link";
 import { formatDateString } from "@/lib/utils";
 import DeletePost from "../forms/DeletePost";
 import ReactionsTab from "../shared/ReactionsBar";
+import { likeStatus } from "@/lib/actions/post.actions";
 
 interface cardParams {
     id: string;
@@ -29,7 +30,7 @@ interface cardParams {
     likes: number;
 }
 
-function PostCard({
+async function PostCard({
     id,
     currentUserId,
     parentId,
@@ -42,7 +43,7 @@ function PostCard({
     likes,
 }: cardParams) {
 
-
+    const result = await likeStatus(id, currentUserId);
     return (
         <article
             className={`flex w-full flex-col rounded-xl ${isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
@@ -74,10 +75,12 @@ function PostCard({
 
 
                         <ReactionsTab
+                            key={id}
                             postId={id}
                             isComment={isComment}
                             userId={currentUserId}
                             likes={likes}
+                            isliked={result.status}
 
                         />
 

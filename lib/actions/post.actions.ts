@@ -224,6 +224,7 @@ export async function deletePost(id: string, path: string): Promise<void> {
                 mainPost.group?._id?.toString(),
             ].filter((id) => id !== undefined)
         );
+        console.log(uniqueAuthorIds)
 
         // Recursively delete child Posts and their descendants
         await Post.deleteMany({ _id: { $in: descendantPostIds } });
@@ -231,13 +232,13 @@ export async function deletePost(id: string, path: string): Promise<void> {
         // Update User model with deleted posts/comments
         await User.updateMany(
             { _id: { $in: Array.from(uniqueAuthorIds) } },
-            { $pull: { Posts: { $in: descendantPostIds } } }
+            { $pull: { posts: { $in: descendantPostIds } } }
         );
 
         // Update supportGroup  model  with deleted posts/comments
         await SupportGroup.updateMany(
             { _id: { $in: Array.from(uniqueGroupIds) } },
-            { $pull: { Posts: { $in: descendantPostIds } } }
+            { $pull: { posts: { $in: descendantPostIds } } }
         );
 
         revalidatePath(path);

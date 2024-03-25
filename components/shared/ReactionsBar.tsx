@@ -2,31 +2,24 @@
 import { likeStatus, updateLike } from "@/lib/actions/post.actions";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname, useRouter, } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
-function ReactionsTab({ postId, isComment, userId, likes }:
+function ReactionsTab({ postId, isComment, userId, likes, isLiked }:
     { postId: string, isComment?: boolean, userId: string, likes: number, isLiked: boolean }) {
 
 
-    const [isLiked1, setIsLiked] = useState<boolean>(false);
-    const [likesCount, setLikesCount] = useState<number>(likes);
 
 
-    useEffect(() => {
-        const fetchIsLiked = async () => {
-            const result = await likeStatus(postId, userId);
-            setIsLiked(result.status);
-            setLikesCount(result.likesCount);
-        };
-        fetchIsLiked();
-    }, []);
+
+    const path = usePathname();
+    const router = useRouter();
+    console.log("liked: ", isLiked)
 
     const handleLike = async () => {
-        console.log('like')
         const result = await updateLike(postId, userId);
-        setIsLiked(!isLiked1);
-        setLikesCount(isLiked1 ? likesCount - 1 : likesCount + 1);
+        router.push(path)
 
     }
 
@@ -37,7 +30,7 @@ function ReactionsTab({ postId, isComment, userId, likes }:
                     <div className="flex flex-row items-center gap-2">
                         <a onClick={handleLike}>
                             <Image
-                                src={isLiked1 ? '/assets/liked.svg' : '/assets/like.svg'}
+                                src={isLiked ? '/assets/liked.svg' : '/assets/like.svg'}
                                 alt='like'
                                 width={24}
                                 height={24}
@@ -45,7 +38,7 @@ function ReactionsTab({ postId, isComment, userId, likes }:
                             />
 
                         </a>
-                        <span className=" text-subtle-medium text-gray-1">{likesCount}</span>
+                        <span className=" text-subtle-medium text-gray-1">{likes}</span>
 
                     </div>
                     <Link href={`/post/${postId}`}>

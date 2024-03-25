@@ -207,20 +207,20 @@ export async function deletePost(id: string, path: string): Promise<void> {
         // Get all descendant Post IDs including the main Post ID and child Post IDs
         const descendantPostIds = [
             id,
-            ...descendantPosts.map((Post) => Post._id),
+            ...descendantPosts.map((post) => post._id),
         ];
 
         // Extract the authorIds and GroupIds to update User and group models respectively
         const uniqueAuthorIds = new Set(
             [
-                ...descendantPosts.map((Post) => Post.author?._id?.toString()),
+                ...descendantPosts.map((post) => post.author?._id?.toString()),
                 mainPost.author?._id?.toString(),
             ].filter((id) => id !== undefined)
         );
 
         const uniqueGroupIds = new Set(
             [
-                ...descendantPosts.map((Post) => Post.group?._id?.toString()),
+                ...descendantPosts.map((post) => post.group?._id?.toString()),
                 mainPost.group?._id?.toString(),
             ].filter((id) => id !== undefined)
         );

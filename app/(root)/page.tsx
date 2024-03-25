@@ -33,6 +33,7 @@ export default async function Home() {
                 supportGroup={post.supportGroup}
                 createdAt={post.createdAt}
                 comments={post.children}
+                likes={post.likes.length}
               />
             ))}
           </>

@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { formatDateString } from "@/lib/utils";
 import DeletePost from "../forms/DeletePost";
+import ReactionsTab from "../shared/ReactionsBar";
+import { likeStatus } from "@/lib/actions/post.actions";
 
 interface cardParams {
     id: string;
@@ -25,6 +27,7 @@ interface cardParams {
         };
     }[];
     isComment?: boolean;
+    likes: number;
 }
 
 function PostCard({
@@ -37,7 +40,11 @@ function PostCard({
     createdAt,
     comments,
     isComment,
+    likes,
 }: cardParams) {
+
+    const isLiked = async () => await likeStatus(id, currentUserId);
+
     return (
         <article
             className={`flex w-full flex-col rounded-xl ${isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
@@ -67,44 +74,16 @@ function PostCard({
 
                         <p className='mt-2 text-small-regular text-light-2'>{content}</p>
 
-                        <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
-                            <div className='flex gap-3.5'>
-                                <Image
-                                    src='/assets/like.svg'
-                                    alt='like'
-                                    width={24}
-                                    height={24}
-                                    className='cursor-pointer object-contain'
-                                />
-                                <Link href={`/post/${id}`}>
-                                    <Image
-                                        src='/assets/reply.svg'
-                                        alt='reply'
-                                        width={24}
-                                        height={24}
-                                        className='cursor-pointer object-contain'
-                                    />
-                                </Link>
-                                <Image
-                                    src='/assets/repost.svg'
-                                    alt='repost'
-                                    width={24}
-                                    height={24}
-                                    className='cursor-pointer object-contain'
-                                />
-                                <Image
-                                    src='/assets/share.svg'
-                                    alt='share'
-                                    width={24}
-                                    height={24}
-                                    className='cursor-pointer object-contain'
-                                />
+
+                        <ReactionsTab
+                            postId={id}
+                            isComment={isComment}
+                            userId={currentUserId}
+                            likes={likes}
+
+                        />
 
 
-                            </div>
-
-
-                        </div>
                     </div>
                 </div>
                 <DeletePost

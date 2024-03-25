@@ -7,7 +7,6 @@ import User from "../models/user.model";
 import { connectTodb } from "../mongoDB";
 import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
-import { v4 as uuidv4 } from 'uuid';
 interface joinParams {
     authUserId: string;
     groupId: string;
@@ -221,12 +220,6 @@ export async function createGroup({ userId, name, username, bio, picture, path }
         user.supportGroups.push(newId);
         await user.save();
 
-        if (path === "/profile/edit") {
-            revalidatePath(path);
-        } else {
-            revalidatePath("/groups")
-
-        }
 
     } catch (error) {
         console.error("Error creating group:", error);

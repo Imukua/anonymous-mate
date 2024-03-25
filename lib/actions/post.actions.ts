@@ -21,11 +21,15 @@ export async function createPost({
     path
 }: postProps): Promise<void> {
     try {
+        const groupObjId = await supportGroup.findOne(
+            { id: groupId },
+            { _id: 1 }
+        );
         connectTodb();
         const createdPost = await Post.create({
             author,
             content,
-            group: groupId,
+            supportGroup: groupObjId ? groupObjId._id : null,
         });
 
         //proceed to update user model
@@ -220,10 +224,15 @@ export async function deletePost(id: string, path: string): Promise<void> {
 
         const uniqueGroupIds = new Set(
             [
-                ...descendantPosts.map((post) => post.group?._id?.toString()),
-                mainPost.group?._id?.toString(),
+                ...descendantPosts.map((post) => post.supportGroup?._id?.toString()),
+                mainPost.supportGroup?._id?.toString(),
             ].filter((id) => id !== undefined)
         );
+
+        console.log("udzz>>> \n", uniqueGroupIds)
+        console.log("udzz>>> \n", uniqueAuthorIds)
+        console.log("udzz>>> \n")
+
 
         // Recursively delete child Posts and their descendants
         await Post.deleteMany({ _id: { $in: descendantPostIds } });

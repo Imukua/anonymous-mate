@@ -17,7 +17,7 @@ async function Page() {
             <h1 className='head-text'>Activity</h1>
 
             <section className='mt-10 flex flex-col gap-5'>
-                {activity?.length ?? 0 > 0 ? (
+                {activity?.length > 0 ? (
                     <>
                         {activity?.map((activity) => (
                             <Link key={activity._id} href={`/post/${activity.parentId}`}>

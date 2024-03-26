@@ -248,3 +248,22 @@ export async function fetchGroupInfo(groupId: string) {
         throw error;
     }
 }
+
+
+export async function fetchGroupMembers(groupId: string) {
+    try {
+        connectTodb();
+        const groupMembers = await SupportGroup.findById(groupId)
+            .populate({
+                path: "members",
+                model: User,
+                select: "name username picture id",
+            });
+
+        return groupMembers;
+
+    } catch (error) {
+        console.log('Error fetching group members: ', error)
+        throw error;
+    }
+}

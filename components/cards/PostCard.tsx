@@ -3,7 +3,6 @@ import Link from "next/link";
 import { formatDateString } from "@/lib/utils";
 import DeletePost from "../forms/DeletePost";
 import ReactionsTab from "../shared/ReactionsBar";
-import { likeStatus } from "@/lib/actions/post.actions";
 
 interface cardParams {
     id: string;
@@ -43,10 +42,9 @@ async function PostCard({
     likes,
 }: cardParams) {
 
-    const result = await likeStatus(id, currentUserId);
     return (
         <article
-            className={`flex w-full flex-col rounded-xl ${isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
+            className={`flex w-full flex-col rounded-xl  ${isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
                 }`}
         >
             <div className='flex items-start justify-between'>
@@ -64,25 +62,16 @@ async function PostCard({
                         <div className='thread-card_bar' />
                     </div>
 
-                    <div className='flex w-full flex-col'>
+                    <div className='flex w-full flex-col  '>
                         <Link href={`/profile/${author.id}`} className='w-fit'>
                             <h4 className='cursor-pointer text-base-semibold text-light-1'>
                                 {author.name}
                             </h4>
                         </Link>
 
-                        <p className='mt-2 text-small-regular text-light-2'>{content}</p>
+                        <p className='mt-2 text-small-regular text-light-2   '>{content}</p>
 
 
-                        <ReactionsTab
-                            key={id}
-                            postId={id}
-                            isComment={isComment}
-                            userId={currentUserId}
-                            likes={likes}
-                            isliked={result.status}
-
-                        />
 
 
                     </div>
@@ -119,7 +108,7 @@ async function PostCard({
             )}
             {!isComment && supportGroup && (
                 <Link
-                    href={`/communities/${supportGroup.id}`}
+                    href={`/groups/${supportGroup.id}`}
                     className='mt-5 flex items-center'
                 >
                     <p className='text-subtle-medium text-gray-1'>

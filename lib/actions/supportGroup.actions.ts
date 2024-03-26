@@ -87,10 +87,18 @@ export async function leaveGroup(
 
         if (group.members.length === 0) {
             await SupportGroup.deleteOne(group._id);
+            revalidatePath(`/groups/${groupId}`)
+            revalidatePath('/groups')
+
             return true
+        } else {
+            revalidatePath(`/groups/${groupId}`)
+            revalidatePath('/groups')
+            return group;
         }
 
-        return group;
+
+
     } catch (error) {
         // Handle any errors
         console.error("Error removing member from group:", error);

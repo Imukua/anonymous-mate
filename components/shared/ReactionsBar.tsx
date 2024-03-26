@@ -6,8 +6,8 @@ import { usePathname, useRouter, } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
-function ReactionsTab({ postId, isComment, userId, likes, isLiked }:
-    { postId: string, isComment?: boolean, userId: string, likes: number, isLiked: boolean }) {
+function ReactionsTab({ postId, isComment, userId, likes }:
+    { postId: string, isComment?: boolean, userId: string, likes: number}) {
 
 
 
@@ -15,29 +15,22 @@ function ReactionsTab({ postId, isComment, userId, likes, isLiked }:
 
     const path = usePathname();
     const router = useRouter();
-    console.log("liked: ", isLiked)
 
-    const handleLike = async () => {
-        const result = await updateLike(postId, userId);
-        router.push(path)
-
-    }
+ 
 
     return (
         <>
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
                 <div className='flex gap-10'>
                     <div className="flex flex-row items-center gap-2">
-                        <a onClick={handleLike}>
                             <Image
-                                src={isLiked ? '/assets/liked.svg' : '/assets/like.svg'}
+                                src={'/assets/like.svg'}
                                 alt='like'
                                 width={24}
                                 height={24}
                                 className='cursor-pointer object-contain'
                             />
 
-                        </a>
                         <span className=" text-subtle-medium text-gray-1">{likes}</span>
 
                     </div>

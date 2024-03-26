@@ -67,12 +67,15 @@ export async function updateUser({
 export async function fetchMembership({ authUserId, groupId }: { authUserId: string, groupId: string }) {
     try {
         connectTodb();
-        const group_Id = new mongoose.Types.ObjectId(groupId);
+        const group = await SupportGroup.findOne({ id: groupId });
+        const gid = group._id;
         const user = await User.findOne({ id: authUserId });
         const usergroups = user.supportGroups;
+        console.log("user groups: ", usergroups)
+        console.log("given GID: ", gid)
 
 
-        const isMember = usergroups.includes(group_Id);
+        const isMember = usergroups.includes(gid);
         return isMember;
 
     } catch (error) {

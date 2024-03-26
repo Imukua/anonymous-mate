@@ -5,6 +5,7 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button"
+import Pagination from "@/components/shared/Pagination";
 
 async function Page(
     {
@@ -54,7 +55,14 @@ async function Page(
                         ))}
                     </>
                 )}
+
+
             </section>
+            <Pagination
+                path='groups'
+                pageNumber={searchParams?.page ? +searchParams.page : 1}
+                isNext={res.isNext}
+            />
 
 
         </>

@@ -1,4 +1,6 @@
 
+"use client"
+import { useState, useEffect } from 'react';
 import { fetchMembership } from "@/lib/actions/user.actions";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,7 +18,8 @@ interface profileProps {
     groupId?: string;
     showBtn?: boolean;
 }
-async function GroupProfile({
+
+function GroupProfile({
     authUserId,
     name,
     username,
@@ -24,20 +27,31 @@ async function GroupProfile({
     bio,
     groupId = "",
     showBtn = false,
-
 }: profileProps) {
-    if (groupId) {
-        const isMember = await fetchMembership({
-            authUserId: authUserId,
-            groupId: groupId
-        });
+    const [isMember, setIsMember] = useState(false);
+
+    useEffect(() => {
+        async function checkMembership() {
+            if (groupId) {
+                const member = await fetchMembership({
+                    authUserId: authUserId,
+                    groupId: groupId
+                });
+                console.log(" 1 >>>>>>>>>>>>>>>>>>>\n", member)
 
 
-        if (isMember) {
-            showBtn = true;
+
+                setIsMember(member);
+
+
+
+            }
         }
 
-    }
+        checkMembership();
+        console.log(" 1 g>>>>>>>>>>>>>>>>>>>\n", isMember)
+
+    }, []);
 
     return (
         <div className='flex flex-col w-full   h-full  ' >
@@ -56,7 +70,7 @@ async function GroupProfile({
                     <span className="block text-gray-500 text-sm w-60 md:w-full ">{bio}</span>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 ">
-                    {showBtn ? (
+                    {isMember ? (
                         <Link href={`/create-post?gid=${groupId}`} >
                             <Button
                                 size='sm'
@@ -75,6 +89,7 @@ async function GroupProfile({
                     <JoinGroup
                         userId={authUserId}
                         groupId={groupId}
+                        isMember={isMember}
                     />
                 </div>
             </div>

@@ -23,7 +23,7 @@ async function GroupProfile({
     imgUrl,
     bio,
     groupId = "",
-    showBtn = true,
+    showBtn = false,
 
 }: profileProps) {
     if (groupId) {
@@ -31,6 +31,7 @@ async function GroupProfile({
             authUserId: authUserId,
             groupId: groupId
         });
+
 
         if (isMember) {
             showBtn = true;
@@ -52,21 +53,28 @@ async function GroupProfile({
             <div className=' items-center bg-neutral-700 bg-opacity-50 p-1 border-r-2 border-cyan-400 w-full flex flex-row justify-between '>
                 <div>
                     <span className=" text-rose-300">@{username}</span>
-                    <span className="block text-gray-500 text-sm">{bio}</span>
+                    <span className="block text-gray-500 text-sm w-60 md:w-full ">{bio}</span>
                 </div>
-                <div className="flex flex-row gap-2 ">
+                <div className="flex flex-col md:flex-row gap-2 ">
                     {showBtn ? (
                         <Link href={`/create-post?gid=${groupId}`} >
                             <Button
                                 size='sm'
-                                className="bg-black text-white rounded-full  px-6 py-3">
-                                post
+                                className="bg-blue text-white  rounded-full  px-2 py-3 md:px-6 md:py-3 justify-between items-center gap-2">
+                                <Image
+                                    src={"/assets/create.svg"}
+                                    width={20}
+                                    height={20}
+                                    alt="Group-Profile-Picture"
+                                    className=" bg-black items-center"
+                                />
+
+                                <h2 className="text-white items-center ">post</h2>
                             </Button>
                         </Link>) : null}
                     <JoinGroup
                         userId={authUserId}
                         groupId={groupId}
-                        isMember={showBtn}
                     />
                 </div>
             </div>

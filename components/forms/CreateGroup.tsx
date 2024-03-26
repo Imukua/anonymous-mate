@@ -53,7 +53,6 @@ const CreateGroup = ({ group, btnTitle }: Props) => {
         const blob = values.profile_photo;
 
         const hasChanged = isBase64Image(blob);
-        console.log(hasChanged)
 
         if (hasChanged) {
             const imgRes = await startUpload(files)

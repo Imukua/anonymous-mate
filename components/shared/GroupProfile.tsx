@@ -47,6 +47,8 @@ function GroupProfile({
 
     }, []);
     const router = useRouter();
+    console.log(isMember)
+
 
     const handleClick = async () => {
 

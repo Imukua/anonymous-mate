@@ -71,9 +71,6 @@ export async function fetchMembership({ authUserId, groupId }: { authUserId: str
         const gid = group._id;
         const user = await User.findOne({ id: authUserId });
         const usergroups = user.supportGroups;
-        console.log("user groups: ", usergroups)
-        console.log("given GID: ", gid)
-
 
         const isMember = usergroups.includes(gid);
         return isMember;

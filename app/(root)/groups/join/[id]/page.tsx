@@ -9,9 +9,7 @@ async function Page({ params }: { params: { id: string } }) {
     const user = await currentUser();
     if (!user) return null;
     const membership = await fetchMembership({ authUserId: user.id, groupId: params.id });
-    console.log(membership)
     const groupInfo = await fetchGroupInfo(params.id);
-    console.log(groupInfo)
     return (
         <>
 

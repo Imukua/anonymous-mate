@@ -229,9 +229,6 @@ export async function deletePost(id: string, path: string): Promise<void> {
             ].filter((id) => id !== undefined)
         );
 
-        console.log("udzz>>> \n", uniqueGroupIds)
-        console.log("udzz>>> \n", uniqueAuthorIds)
-        console.log("udzz>>> \n")
 
 
         // Recursively delete child Posts and their descendants

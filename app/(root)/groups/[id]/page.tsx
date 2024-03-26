@@ -16,6 +16,7 @@ async function Page({ params }: { params: { id: string } }) {
     const groupInfo = await fetchGroupInfo(params.id);
 
 
+
     return (
         <section>
             <GroupProfile

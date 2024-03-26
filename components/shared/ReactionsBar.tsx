@@ -6,8 +6,8 @@ import { usePathname, useRouter, } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
-function ReactionsTab({ postId, isComment, userId, likes }:
-    { postId: string, isComment?: boolean, userId: string, likes: number}) {
+function ReactionsTab({ postId, isComment, }:
+    { postId: string, isComment?: boolean, userId: string, likes: number }) {
 
 
 
@@ -16,22 +16,20 @@ function ReactionsTab({ postId, isComment, userId, likes }:
     const path = usePathname();
     const router = useRouter();
 
- 
+
 
     return (
         <>
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
                 <div className='flex gap-10'>
                     <div className="flex flex-row items-center gap-2">
-                            <Image
-                                src={'/assets/like.svg'}
-                                alt='like'
-                                width={24}
-                                height={24}
-                                className='cursor-pointer object-contain'
-                            />
-
-                        <span className=" text-subtle-medium text-gray-1">{likes}</span>
+                        <Image
+                            src={'/assets/like.svg'}
+                            alt='like'
+                            width={24}
+                            height={24}
+                            className='cursor-pointer object-contain'
+                        />
 
                     </div>
                     <Link href={`/post/${postId}`}>

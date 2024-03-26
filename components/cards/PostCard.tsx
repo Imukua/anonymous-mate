@@ -70,6 +70,45 @@ async function PostCard({
                         </Link>
 
                         <p className='mt-2 text-small-regular text-light-2   '>{content}</p>
+                        <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
+                            <div className='flex gap-10'>
+                                <div className="flex flex-row items-center gap-2">
+                                    <Image
+                                        src={'/assets/like.svg'}
+                                        alt='like'
+                                        width={24}
+                                        height={24}
+                                        className='cursor-pointer object-contain'
+                                    />
+
+                                </div>
+                                <Link href={`/post/${id}`}>
+                                    <Image
+                                        src='/assets/reply.svg'
+                                        alt='reply'
+                                        width={24}
+                                        height={24}
+                                        className='cursor-pointer object-contain'
+                                    />
+                                </Link>
+                                <Image
+                                    src='/assets/repost.svg'
+                                    alt='repost'
+                                    width={24}
+                                    height={24}
+                                    className='cursor-pointer object-contain'
+                                />
+                                <Image
+                                    src='/assets/share.svg'
+                                    alt='share'
+                                    width={24}
+                                    height={24}
+                                    className='cursor-pointer object-contain'
+                                />
+
+
+                            </div>
+                        </div>
 
 
 
@@ -83,6 +122,7 @@ async function PostCard({
                     parentId={parentId}
                     isComment={isComment}
                 />
+
 
             </div>
 

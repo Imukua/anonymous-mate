@@ -3,6 +3,7 @@
 import { deletePost } from "@/lib/actions/post.actions";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { toast } from "sonner"
 
 
 interface Props {
@@ -36,10 +37,17 @@ function DeletePost({
             height={18}
             className='cursor-pointer object-contain'
             onClick={async () => {
+
                 await deletePost(JSON.parse(postId), pathname);
-                if (!parentId || !isComment) {
-                    router.push("/");
-                }
+                toast("Post deletion", {
+                    className: ' text-light-1 font-bold text-lg px-2 py-2 rounded-lg',
+                    description: "Post deleted successfully",
+                    action: {
+                        label: "Undo",
+                        onClick: () => console.log("Undo"),
+                    },
+                })
+
             }}
         />
 

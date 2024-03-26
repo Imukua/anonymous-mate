@@ -5,6 +5,8 @@ import Image from "next/image";
 import PostsTab from "@/components/shared/PostsTab";
 import { fetchGroupInfo } from "@/lib/actions/supportGroup.actions";
 import GroupProfile from "@/components/shared/GroupProfile";
+import MembersTab from "@/components/shared/MembersTab";
+import ActionsTab from "@/components/shared/ActionsTab";
 
 async function Page({ params }: { params: { id: string } }) {
 
@@ -46,20 +48,42 @@ async function Page({ params }: { params: { id: string } }) {
                             </TabsTrigger>
                         ))}
                     </TabsList>
-                    {groupTabs.map((tab) => (
-                        <TabsContent
-                            key={`content-${tab.label}`}
-                            value={tab.value}
-                            className='w-full text-light-1'
-                        >
-                            {/* @ts-ignore */}
-                            <PostsTab
-                                currentUserId={user.id}
-                                accountId={groupInfo._id}
-                                accountType='SupportGroup'
-                            />
-                        </TabsContent>
-                    ))}
+
+                    <TabsContent
+                        key={`content-Posts`}
+                        value={"posts"}
+                        className='w-full text-light-1'
+                    >
+                        {/* @ts-ignore */}
+                        <PostsTab
+                            currentUserId={user.id}
+                            accountId={groupInfo._id}
+                            accountType='SupportGroup'
+                        />
+
+                    </TabsContent>
+                    <TabsContent
+                        key={`content-members`}
+                        value={"members"}
+                        className='w-full text-light-1'
+                    >
+                        {/* @ts-ignore */}
+                        <MembersTab
+                            groupId={groupInfo._id}
+                        />
+
+                    </TabsContent>
+                    <TabsContent
+                        key={`content-actions`}
+                        value={"actions"}
+                        className='w-full text-light-1'
+                    >
+                        {/* @ts-ignore */}
+                        <ActionsTab />
+
+                    </TabsContent>
+
+
                 </Tabs>
             </div>
         </section>

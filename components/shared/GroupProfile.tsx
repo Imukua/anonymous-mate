@@ -7,6 +7,8 @@ import Link from "next/link";
 import JoinGroup from "../forms/JoinGroup";
 import { auth } from "@clerk/nextjs";
 import { Button } from "../ui/button";
+import { joinGroup, leaveGroup } from "@/lib/actions/supportGroup.actions";
+import { usePathname, useRouter } from "next/navigation";
 
 interface profileProps {
     authUserId: string;
@@ -37,21 +39,25 @@ function GroupProfile({
                     authUserId: authUserId,
                     groupId: groupId
                 });
-                console.log(" 1 >>>>>>>>>>>>>>>>>>>\n", member)
-
-
-
                 setIsMember(member);
-
-
-
             }
         }
 
         checkMembership();
-        console.log(" 1 g>>>>>>>>>>>>>>>>>>>\n", isMember)
 
     }, []);
+    const router = useRouter();
+
+    const handleClick = async () => {
+
+        router.push(`/groups/join/${groupId}`);
+
+    }
+    const handleJoin = async () => {
+
+        router.push(`/groups/join/${groupId}`);
+
+    }
 
     return (
         <div className='flex flex-col w-full   h-full  ' >
@@ -86,11 +92,23 @@ function GroupProfile({
                                 <h2 className="text-white items-center ">post</h2>
                             </Button>
                         </Link>) : null}
-                    <JoinGroup
-                        userId={authUserId}
-                        groupId={groupId}
-                        isMember={isMember}
-                    />
+
+                    {isMember ? (<div>
+                        <Button
+                            size='sm'
+                            className="bg-black text-white rounded-full  px-6 py-3"
+                            onClick={handleClick}
+                        >Leave</Button>
+                    </div>) :
+                        (<div>
+                            <Button
+                                size='sm'
+                                className="bg-black text-white rounded-full  px-6 py-3"
+                                onClick={handleJoin}
+                            >Join</Button>
+                        </div>)
+                    }
+
                 </div>
             </div>
         </div >

@@ -201,7 +201,6 @@ export async function createGroup({ userId, name, username, bio, picture, path }
     let existingDoc;
     do {
         newId = new mongoose.Types.ObjectId().toString();
-        console.log(newId)
         try {
             existingDoc = await SupportGroup.findById(newId);
         } catch (error) {
@@ -212,23 +211,19 @@ export async function createGroup({ userId, name, username, bio, picture, path }
 
     try {
         connectTodb();
-        await SupportGroup.findOneAndUpdate(
-            { id: newId },
-            {
-                username: username.toLowerCase(),
-                name,
-                bio,
-                picture,
-                founder: user._id,
-                members: [user._id]
-            },
-            { upsert: true }
-        );
+        const newGroup = new SupportGroup({
+            id: newId,
+            name,
+            username,
+            bio,
+            picture,
+            founder: user._id,
+            members: [user._id],
+        });
 
-        user.supportGroups.push(newId);
+        const cGroup = await newGroup.save();
+        user.supportGroups.push(cGroup._id);
         await user.save();
-
-
     } catch (error) {
         console.error("Error creating group:", error);
         throw error;
@@ -240,7 +235,7 @@ export async function createGroup({ userId, name, username, bio, picture, path }
 export async function fetchGroupInfo(groupId: string) {
     try {
         connectTodb;
-        const groupInfo = await SupportGroup.findOne({ groupId })
+        const groupInfo = await SupportGroup.findOne({ id: groupId })
             .populate([
                 'founder',
                 {

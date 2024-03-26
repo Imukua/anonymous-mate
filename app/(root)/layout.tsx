@@ -6,6 +6,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 import BottomBar from "@/components/shared/BottomBar";
 import LeftBar from "@/components/shared/LeftBar";
 import RightBar from "@/components/shared/RightBar";
+import { Toaster } from "@/components/ui/sonner"
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,10 +32,12 @@ export default function RootLayout({
 
               <div className="w-full max-w4xl">
                 {children}
+                <Toaster />
               </div>
             </section>
             <RightBar />
           </main>
+
 
           <BottomBar />
         </body>

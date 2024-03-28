@@ -1,4 +1,18 @@
+
+# ANONYMATE
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+
+## Problem Statement
+Anonymate aims to address the challenge of providing a safe, anonymous, and structured platform for individuals to seek and offer support while dealing with personal challenges, traumas, and addictions. It seeks to foster a sense of community, understanding, and healing among users.
+
+## What It Will Not Solve 
+Anonymate will not replace professional therapy or medical treatment. It serves as a supplementary support system and does not provide medical or psychological advice.
+
+## Target Users
+Anonymate is relevant to anyone facing personal challenges, traumas, or addictions who desires a private, judgmentfree space for support and connection. It is not dependent on a specific locale and can serve a global user base.
+
 
 ## Getting Started
 
@@ -30,15 +44,6 @@ To learn more about Next.js, take a look at the following resources:
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
 
-
-## Problem Statement
-Anonymate aims to address the challenge of providing a safe, anonymous, and structured platform for individuals to seek and offer support while dealing with personal challenges, traumas, and addictions. It seeks to foster a sense of community, understanding, and healing among users.
-
-## What It Will Not Solve 
-Anonymate will not replace professional therapy or medical treatment. It serves as a supplementary support system and does not provide medical or psychological advice.
-
-## Target Users
-Anonymate is relevant to anyone facing personal challenges, traumas, or addictions who desires a private, judgmentfree space for support and connection. It is not dependent on a specific locale and can serve a global user base.
 
 
 
